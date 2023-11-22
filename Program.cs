@@ -87,8 +87,12 @@ namespace _2
         {
             int choice1, choice2, choice3 = 1;
             Values values = new Values();
-            Thread thread1 = new Thread(GeneratePrimes1);
-            Thread thread2 = new Thread(GenerateFib1);
+            ParameterizedThreadStart ts1 = new ParameterizedThreadStart(GeneratePrimes1);
+            ParameterizedThreadStart ts2 = new ParameterizedThreadStart(GenerateFib1);
+            ParameterizedThreadStart ts3 = new ParameterizedThreadStart(GeneratePrimes2);
+            ParameterizedThreadStart ts4 = new ParameterizedThreadStart(GenerateFib2);
+            Thread thread1 = new Thread(ts1);
+            Thread thread2 = new Thread(ts2);
             do
             {
                 Console.Write("Будете ли вы выбирать нижнюю границу диапазона (1, 0)? ");
@@ -110,15 +114,13 @@ namespace _2
 
                 if (choice2 == 0)
                 {
-                    thread1 = new Thread(GeneratePrimes2);
-                    thread2 = new Thread(GenerateFib2);
+                    thread1 = new Thread(ts3);
+                    thread2 = new Thread(ts4);
                 }
                 else if (choice2 == 1)
                 {
                     Console.Write("Выберите верхнее крайнее значение: ");
                     values.End = Convert.ToInt32(Console.ReadLine());
-                    thread1 = new Thread(GeneratePrimes1);
-                    thread2 = new Thread(GenerateFib1);
                 }
 
                 Console.Write("\n\n");
